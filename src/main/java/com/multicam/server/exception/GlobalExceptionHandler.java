@@ -11,7 +11,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -38,6 +38,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ApiResponse<Map<String, String>> handleUnreadable(HttpMessageNotReadableException ex) {
+        return build(ErrorCode.PARAMETER_TYPE_INVALID, null);
+    }
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public ApiResponse<Map<String, String>> handleMediaType(HttpMediaTypeNotSupportedException ex) {
         return build(ErrorCode.PARAMETER_TYPE_INVALID, null);
     }
 
